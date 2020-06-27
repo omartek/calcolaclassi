@@ -16,9 +16,9 @@ int interasseY;
 void setup() {                       // setup valori iniziali                                       
   size(800, 600);
   
-  misure[0] = 500; // aulaX
+  misure[0] = 400; // aulaX
   misure[1] = 400; // aulaY
-  misure[2] = 60;  // bancoX
+  misure[2] = 40;  // bancoX
   misure[3] = 40;  // bancoY
   misure[4] = 50;  // interbancoX
   misure[5] = 60;  // interbancoY
