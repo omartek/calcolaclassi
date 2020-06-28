@@ -1,4 +1,4 @@
-int btnX_pos = 700;        // posizione e dati pulsantiera
+int btnX_pos = 800;        // posizione e dati pulsantiera
 int btnY_pos = 20;
 int btnY_dist = 50;
 int btn_num = 12;          // parametri aula misurabili complessivamente
