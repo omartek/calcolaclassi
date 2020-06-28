@@ -29,7 +29,7 @@ void setup() {            // setup valori iniziali
   misure[8] = 30;    // spazio-insY dal muro lavagna
   misure[9] = 160;   // cattedraX
   misure[10] = 60;   // cattedraY
-  misure[11] = 200;  // distanza professore
+  misure[11] = 225;  // distanza asse testa professore/studente
 
                       // valore incremento al click della pulsantiera
   incrementi[0] = 5;  // aulaX
@@ -66,13 +66,15 @@ background(100);
 int x0 = 20; // origine disegno aula
 int y0 = 50; // origine disegno aula
 
+ fill(255);
+ rect(x0, y0, misure[0], misure[1]);                                      // disegno aula
+
  for (int i = 0; i < btn_num_ON; i = i+1) {                               // disegno pulsantiera
     disegna_rect(btnX_pos, btnY_pos + i*btnY_dist, 20, 20,"-");           // pulsante di sinistra
     disegna_rect(btnX_pos + 30, btnY_pos + i*btnY_dist, 20, 20,"+");      // pulsante di destra
     disegna_valori(btnX_pos, btnY_pos + i*btnY_dist, i);                  // scrivi etichette
  }
 
- rect(x0, y0, misure[0], misure[1]);                                      // disegno aula (20,50) sono l'r
  int sp_insegnante = misure[8] + misure[11];
  calcolo_interassi(misure[0], misure[1], misure[2], misure[3], misure[4], misure[5], misure[6], misure[7], sp_insegnante);    // calcolo interassi
  disegna_banchi(x0, y0, misure[0], misure[1], misure[2], misure[3], misure[6], misure[8], misure[9], misure[10], misure[11]); // disegna banchi
@@ -124,21 +126,21 @@ void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY
   fill(180);
   for (int i = 0 ; i < numerofile + 1; i++){                                 // disegno banchi
       for (int ii = 0 ; ii < numerorighe + 1; ii++){
-        ellipse(xs + bordo_aula_def, ys - ii*interasseY , 25, 25);
+        ellipse(xs + bordo_aula_def, ys - ii*interasseY , 25, 25);           // disegno testa
         // ellipse(xs + bancoX/2, ys - ii*interasseY + bancoY, (int)bancoX/2, (int)bancoY/2);
         // rect(xs, ys - ii*interasseY, bancoX, bancoY);  // bancoX e bancoY
       }
   xs = xs + interasseX;
   }
-  
+   
   rect(x0 + aulaX/2 - cattedraX/2 , y0 + spazio_insY, cattedraX, cattedraY); // disegno cattedra
-  ellipse(x0 + aulaX/2, y0 + spazio_insY, 25, 25);
+  ellipse(x0 + aulaX/2, y0 + spazio_insY, 25, 25);                           // testa insegnate
   noFill();
-  arc(x0 + aulaX/2, y0 + spazio_insY, dist_professore*2, dist_professore*2, 0, 3.14);
+  arc(x0 + aulaX/2, y0 + spazio_insY, (dist_professore-12.5)*2, (dist_professore-12.5)*2, 0, 3.14);
   
   fill(255);                                                                 // disegno quote
 
-  text(fondo_aula, x0-15, y0+aulaY-(int)(fondo_aula/2));                            // disegno quote lungo Y
+  text(fondo_aula, x0-15, y0+aulaY-(int)(fondo_aula/2));                     // disegno quote lungo Y
   for (int i = 0 ; i < numerorighe; i++){  
       text(interasseY, x0-15, y0+aulaY-(fondo_aula+bancoY)-interasseY*i);
   }
@@ -155,7 +157,7 @@ void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY
   fill(0);
   line(x0+bordo_aula_def, y0+aulaY-fondo_aula, x0+bordo_aula_def, y0+aulaY-fondo_aula-interasseY); // linea verticale
   text(interasseY, x0+bordo_aula_def-10, y0+aulaY-fondo_aula-interasseY/2);
-  line(x0+bordo_aula_def, y0+aulaY-fondo_aula, x0+bordo_aula_def+interasseX, y0+aulaY-fondo_aula);                // linea orizzontale
+  line(x0+bordo_aula_def, y0+aulaY-fondo_aula, x0+bordo_aula_def+interasseX, y0+aulaY-fondo_aula); // linea orizzontale
   text(interasseX, x0+bordo_aula_def+(int)interasseX/2-10, y0+aulaY-fondo_aula-10);
  
 }
@@ -192,7 +194,7 @@ void disegna_rect(int x, int y, int a, int b, String btn_text){            // di
 }
 
 void disegna_valori(int x, int y, int index){                              // scrittura etichette
-  fill(255);
+  fill(0);
   text(btn_label[index], x+20+35, y+(int)(20/2)+7.5);
   text(str(misure[index]), x+20+3+50+80, y+(int)(20/2)+7.5);
 }
