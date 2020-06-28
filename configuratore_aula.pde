@@ -1,4 +1,4 @@
-int btnX_pos = 800;        // posizione e dati pulsantiera
+int btnX_pos = 900;        // posizione e dati pulsantiera
 int btnY_pos = 20;
 int btnY_dist = 50;
 int btn_num = 12;          // parametri aula misurabili complessivamente
@@ -16,7 +16,7 @@ int interasseY;
 int bordo_aula_def;
 
 void setup() {            // setup valori iniziali                                       
-  size(1000, 800);
+  size(1100, 1000);
                      // parametri aula misurabili
   misure[0] = 480;   // aulaX
   misure[1] = 600;   // aulaY
