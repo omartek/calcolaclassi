@@ -2,9 +2,9 @@ int btnX_pos = 900;        // posizione e dati pulsantiera
 int btnY_pos = 20;
 int btnY_dist = 50;
 int btn_num = 12;          // parametri aula misurabili complessivamente
-int btn_num_ON = 2;        // misure visibili modificabili a video dall'utente
+int btn_num_ON = 4;        // misure visibili modificabili a video dall'utente
 
-int misure_n = btn_num;              // matrici valori e misurazioni
+int misure_n = btn_num;    // matrici valori e misurazioni
 int[] misure = new int[misure_n];
 int[] incrementi = new int[misure_n];
 String[] btn_label = new String[btn_num];
@@ -15,12 +15,15 @@ int interasseX;
 int interasseY;
 int bordo_aula_def;
 
+//PShape freccia;
+
 void setup() {            // setup valori iniziali                                       
   size(1100, 1000);
-                     // parametri aula misurabili
+//  crea_Shape();           // disegno freccia quote
+                          // parametri aula misurabili
   misure[0] = 480;   // aulaX
   misure[1] = 600;   // aulaY
-  misure[2] = 40;    // bancoX
+  misure[2] = 60;    // bancoX
   misure[3] = 40;    // bancoY
   misure[4] = 100;   // interbancoX
   misure[5] = 100;   // interbancoY
@@ -31,7 +34,7 @@ void setup() {            // setup valori iniziali
   misure[10] = 60;   // cattedraY
   misure[11] = 225;  // distanza asse testa professore/studente
 
-                      // valore incremento al click della pulsantiera
+                           // valore incremento al click della pulsantiera
   incrementi[0] = 5;  // aulaX
   incrementi[1] = 5;  // aulaY
   incrementi[2] = 5;  // bancoX
@@ -45,7 +48,7 @@ void setup() {            // setup valori iniziali
   incrementi[10] = 5; // cattedraY 
   incrementi[11] = 5; // distanza professore
 
-                      // label pulsanti e valori
+                           // label pulsanti e valori
   btn_label[0] = "AulaX";
   btn_label[1] = "AulaY";
   btn_label[2] = "BancoX";
@@ -68,7 +71,8 @@ int y0 = 50; // origine disegno aula
 
  fill(255);
  rect(x0, y0, misure[0], misure[1]);                                      // disegno aula
-
+ carta_millimetrata(x0, y0, misure[0], misure[1]);                        // carta millimetrata
+ 
  for (int i = 0; i < btn_num_ON; i = i+1) {                               // disegno pulsantiera
     disegna_rect(btnX_pos, btnY_pos + i*btnY_dist, 20, 20,"-");           // pulsante di sinistra
     disegna_rect(btnX_pos + 30, btnY_pos + i*btnY_dist, 20, 20,"+");      // pulsante di destra
@@ -78,7 +82,7 @@ int y0 = 50; // origine disegno aula
  int sp_insegnante = misure[8] + misure[11];
  calcolo_interassi(misure[0], misure[1], misure[2], misure[3], misure[4], misure[5], misure[6], misure[7], sp_insegnante);    // calcolo interassi
  disegna_banchi(x0, y0, misure[0], misure[1], misure[2], misure[3], misure[6], misure[8], misure[9], misure[10], misure[11]); // disegna banchi
-
+ 
 }
 
 void mouseReleased()  {                                                    // CLICK DELLA PULSANTIERA VALORI
@@ -126,20 +130,23 @@ void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY
   fill(180);
   for (int i = 0 ; i < numerofile + 1; i++){                                 // disegno banchi
       for (int ii = 0 ; ii < numerorighe + 1; ii++){
+        rect(xs + bordo_aula_def - (int)(bancoX/2), ys - ii*interasseY - bancoY, bancoX, bancoY);  // bancoX e bancoY
         ellipse(xs + bordo_aula_def, ys - ii*interasseY , 25, 25);           // disegno testa
-        // ellipse(xs + bancoX/2, ys - ii*interasseY + bancoY, (int)bancoX/2, (int)bancoY/2);
-        // rect(xs, ys - ii*interasseY, bancoX, bancoY);  // bancoX e bancoY
       }
   xs = xs + interasseX;
   }
    
   rect(x0 + aulaX/2 - cattedraX/2 , y0 + spazio_insY, cattedraX, cattedraY); // disegno cattedra
+  line(x0 + aulaX/2, y0 + spazio_insY, x0 + aulaX/2, y0 + spazio_insY+(dist_professore-12.5));
   ellipse(x0 + aulaX/2, y0 + spazio_insY, 25, 25);                           // testa insegnate
+//  disegna_freccia(x0 + aulaX/2, y0 + spazio_insY+12.5, PI);                  // freccia quota distanza professore
+//  disegna_freccia(x0 + aulaX/2, y0 + spazio_insY+dist_professore-12.5, 0);
+  fill(0);
+  text("200", x0 + (int)aulaX/2+10, y0 + spazio_insY+(int)((dist_professore)/2));
   noFill();
   arc(x0 + aulaX/2, y0 + spazio_insY, (dist_professore-12.5)*2, (dist_professore-12.5)*2, 0, 3.14);
-  
-  fill(255);                                                                 // disegno quote
 
+                                                                             // disegno quote
   text(fondo_aula, x0-15, y0+aulaY-(int)(fondo_aula/2));                     // disegno quote lungo Y
   for (int i = 0 ; i < numerorighe; i++){  
       text(interasseY, x0-15, y0+aulaY-(fondo_aula+bancoY)-interasseY*i);
@@ -147,7 +154,7 @@ void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY
   text(spazio_insY, x0-15, y0+(int)(spazio_insY/2));
   text(dist_professore_reale, x0-15, (int)(y0+spazio_insY+(dist_professore_reale/2))); 
   
-  text(bordo_aula_def, x0+(int)bordo_aula_def/2, y0+aulaY+10);        // disegno quote lungo X
+  text(bordo_aula_def, x0+(int)bordo_aula_def/2, y0+aulaY+10);               // disegno quote lungo X
   for (int i = 0 ; i < numerofile; i++){
       //text(bordo_aula_def, x0+(int)(bancoX/2)+i*interasseX, y0+aulaY+10);
       text(interasseX, x0+bordo_aula_def+(int)(interasseX/2)+i*interasseX, y0+aulaY+10);  
@@ -197,4 +204,38 @@ void disegna_valori(int x, int y, int index){                              // sc
   fill(0);
   text(btn_label[index], x+20+35, y+(int)(20/2)+7.5);
   text(str(misure[index]), x+20+3+50+80, y+(int)(20/2)+7.5);
+}
+
+/*
+void crea_Shape(){
+  freccia = createShape();
+  freccia.beginShape();
+  freccia.fill(125);
+  freccia.noStroke();
+  freccia.vertex(0, 0);
+  freccia.vertex(-5, -8);
+  freccia.vertex(5, -8);
+  freccia.endShape(CLOSE);
+}
+
+void disegna_freccia(float posx, float posy, float rotazione){
+  translate(posx, posy);
+  rotate(rotazione);
+  shape(freccia,0,0);
+  rotate(-rotazione);
+  translate(-posx,-posy);
+
+}
+*/
+
+void carta_millimetrata(int x0, int y0, int aulaX, int aulaY){
+  for (int i = 0 ; i < aulaX; i = i + 10){
+    stroke(200);
+    line(x0 + i, y0, x0 + i, y0 + aulaY);
+  }
+  for (int i = 0 ; i < aulaY; i = i + 10){
+    stroke(200);
+    line(x0, y0 + i, x0 + aulaX, y0 + i);
+  }
+stroke(0);
 }
