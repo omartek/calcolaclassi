@@ -18,15 +18,15 @@ int bordo_aula_def;
 void setup() {            // setup valori iniziali                                       
   size(800, 800);
                      // parametri aula misurabili
-  misure[0] = 400;   // aulaX
-  misure[1] = 600;   // aulaY
+  misure[0] = 480;   // aulaX
+  misure[1] = 580;   // aulaY
   misure[2] = 40;    // bancoX
   misure[3] = 40;    // bancoY
   misure[4] = 100;   // interbancoX
   misure[5] = 100;   // interbancoY
   misure[6] = 30;    // distanza fondo aula
   misure[7] = 30;    // distanza bordi aula
-  misure[8] = 20;    // spazio-insY dal muro lavagna
+  misure[8] = 30;    // spazio-insY dal muro lavagna
   misure[9] = 160;   // cattedraX
   misure[10] = 60;   // cattedraY
   misure[11] = 200;  // distanza professore
