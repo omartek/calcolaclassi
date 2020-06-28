@@ -134,11 +134,11 @@ void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY
   rect(x0 + aulaX/2 - cattedraX/2 , y0 + spazio_insY, cattedraX, cattedraY); // disegno cattedra
   ellipse(x0 + aulaX/2, y0 + spazio_insY, 25, 25);
   noFill();
-  arc(x0 + aulaX/2, y0 + spazio_insY, 400, 400, 0, PI, CHORD);
+  arc(x0 + aulaX/2, y0 + spazio_insY, dist_professore*2, dist_professore*2, 0, 3.14);
   
   fill(255);                                                                 // disegno quote
 
-  text(fondo_aula, x0-15, y0+aulaY-fondo_aula/2);                            // disegno quote lungo Y
+  text(fondo_aula, x0-15, y0+aulaY-(int)(fondo_aula/2));                            // disegno quote lungo Y
   for (int i = 0 ; i < numerorighe; i++){  
       text(interasseY, x0-15, y0+aulaY-(fondo_aula+bancoY)-interasseY*i);
   }
@@ -156,7 +156,7 @@ void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY
   line(x0+bordo_aula_def, y0+aulaY-fondo_aula, x0+bordo_aula_def, y0+aulaY-fondo_aula-interasseY); // linea verticale
   text(interasseY, x0+bordo_aula_def-10, y0+aulaY-fondo_aula-interasseY/2);
   line(x0+bordo_aula_def, y0+aulaY-fondo_aula, x0+bordo_aula_def+interasseX, y0+aulaY-fondo_aula);                // linea orizzontale
-  text(interasseX, x0+bordo_aula_def+interasseX/2-10, y0+aulaY-fondo_aula-10);
+  text(interasseX, x0+bordo_aula_def+(int)interasseX/2-10, y0+aulaY-fondo_aula-10);
  
 }
 
@@ -164,7 +164,6 @@ void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY
 void calcolo_interassi(int aulaX, int aulaY, int bancoX, int bancoY, int interX, int interY, int fondo_aula, int bordo_aula, int sp_insegnante){
    //numerofile = (int) ((aulaX - bancoX) / (bancoX + interX)) ; // interasseX
    numerofile = ((aulaX - bordo_aula*2) % interX); // calcola resto divisione per decidere se ridurre la distanza bordo_aula o meno 
-   println("interasse X" + str(numerofile));
    if (numerofile < 80){                           // i bordi aula vengono aumentati del resto /2
        numerofile = (int)((aulaX - bordo_aula*2) / interX);
        bordo_aula_def = ((aulaX-numerofile*interX)/2);
@@ -173,10 +172,10 @@ void calcolo_interassi(int aulaX, int aulaY, int bancoX, int bancoY, int interX,
        numerofile = (int)((aulaX - bordo_aula*2) / interX) +1 ;
        bordo_aula_def = ((aulaX-numerofile*interX)/2);
    }
-   println("numero file: " + str(numerofile));         // righe per debug
+   // println("numero file: " + str(numerofile));         // righe per debug
    // println("bordo aula: " + str(bordo_aula_def));      // righe per debug
    numerorighe = (int)((aulaY - sp_insegnante - fondo_aula) / interY); // interasseY
-   println("numero righe: " + str(numerorighe));         // righe per debug
+   // println("numero righe: " + str(numerorighe));       // righe per debug
 
    interasseX = interX;                                 // l'interasse non è variabile
    interasseY = interY;                                 // l'interasse non è variabile
