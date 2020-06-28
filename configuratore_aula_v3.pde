@@ -2,7 +2,7 @@ int btnX_pos = 900;        // posizione e dati pulsantiera
 int btnY_pos = 20;
 int btnY_dist = 50;
 int btn_num = 12;          // parametri aula misurabili complessivamente
-int btn_num_ON = 4;        // misure visibili modificabili a video dall'utente
+int btn_num_ON = 12;        // misure visibili modificabili a video dall'utente
 
 int misure_n = btn_num;    // matrici valori e misurazioni
 int[] misure = new int[misure_n];
@@ -53,14 +53,14 @@ void setup() {            // setup valori iniziali
   btn_label[1] = "AulaY";
   btn_label[2] = "BancoX";
   btn_label[3] = "BancoY";
-  btn_label[4] = "distX";
-  btn_label[5] = "distY";
+  btn_label[4] = "dist-stud-X";
+  btn_label[5] = "dist-stud-Y";
   btn_label[6] = "fondo-aula";
   btn_label[7] = "bordo-aula";
   btn_label[8] = "spazio-insY";
   btn_label[9] = "cattedraX";
   btn_label[10] = "cattedraY";
-  btn_label[11] = "dist_professore"; 
+  btn_label[11] = "dist_prof"; 
 } 
 
 void draw() {
