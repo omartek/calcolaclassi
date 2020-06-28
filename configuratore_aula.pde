@@ -19,7 +19,7 @@ void setup() {            // setup valori iniziali
   size(800, 800);
                      // parametri aula misurabili
   misure[0] = 480;   // aulaX
-  misure[1] = 580;   // aulaY
+  misure[1] = 600;   // aulaY
   misure[2] = 40;    // bancoX
   misure[3] = 40;    // bancoY
   misure[4] = 100;   // interbancoX
