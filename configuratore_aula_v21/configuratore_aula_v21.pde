@@ -1,5 +1,5 @@
 int btnX_pos = 900;        // posizione e dati pulsantiera
-int btnY_pos = 60;
+int btnY_pos = 20;
 int btnY_dist = 30;
 int btn_num = 15;          // parametri aula misurabili complessivamente
 int btn_num_ON = 2;        // misure visibili modificabili a video dall'utente
@@ -15,7 +15,6 @@ int numerorighe;
 int interasseX;
 int interasseY;
 int bordo_aula_def;
-int carta_millimetrata = 1;
 
 //PShape freccia;
 
@@ -38,7 +37,7 @@ void setup() {            // setup valori iniziali
   misure[11] = 200;  // distanza asse testa professore/studente
   misure[12] = 0 ;   // posizione cattedra
   misure[13] = 0 ;   // valore passaggio fila più larga
-  misure[14] = 2 ;   // banchi aggiuntivi
+  misure[14] = 1 ;   // banchi aggiuntivi
   
                              // valore incremento al click della pulsantiera
   incrementi[0] = 5;  // aulaX
@@ -134,8 +133,7 @@ int y0 = 50; // origine disegno aula
     disegna_rect(btnX_pos + 30, btnY_pos + i*btnY_dist, 20, 20,"+");      // pulsante di destra
     disegna_valori(btnX_pos, btnY_pos + i*btnY_dist, i);                  // scrivi etichette
  }
- disegna_carta_millimetrata(btnX_pos, btnY_pos - 30);
-   
+ 
  int sp_insegnante = misure[8] + misure[11];
  calcolo_interassi(misure[0], misure[1], misure[2], misure[3], misure[4], misure[5], misure[6], misure[7], sp_insegnante, misure[13]);                // calcolo interassi
  disegna_banchi(x0, y0, misure[0], misure[1], misure[2], misure[3], misure[6], misure[8], misure[9], misure[10], misure[11], misure[12], misure[13]); // disegna banchi
@@ -176,12 +174,6 @@ int verifica_btn(int x, int y){                                            // ca
       if ( y > (btnY_pos+i*btnY_dist) && y < (btnY_pos+i*btnY_dist+20) ){
       return i+btn_num_ON;
       }
-    }
-  }
-  if ( x > (btnX_pos) && x < (btnX_pos+20) ){
-    if ( y > (btnY_pos-30) && y < (btnY_pos-30+20) ){
-     if ( carta_millimetrata == 0) { carta_millimetrata = 1; }
-      else carta_millimetrata = 0;
     }
   }
 return -1;
@@ -226,7 +218,7 @@ void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY
   noFill();
   arc(x0 + aulaX/2 + pos_cattedra, y0 + spazio_insY, (dist_professore+12.5)*2, (dist_professore+12.5)*2, 0, 3.14);
 
-  rect(x0 + aulaX, y0 + dist_professore/2-5, 90, 5);                         // disegna porta ingresso
+  rect(x0 + aulaX, y0 + 100-5, 90, 5);                         // disegna porta ingresso
   arc(x0 + aulaX, y0 + 100, 180, 180, 0, 3.14/2);
   
                                                                              // disegno quote
@@ -317,16 +309,6 @@ void disegna_valori(int x, int y, int index){                              // sc
   text(str(misure[index]), x+20+3+50+80, y+(int)(20/2)+7.5);
 }
 
-void disegna_carta_millimetrata(int x, int y){                              // scrittura etichette
-  if ( carta_millimetrata == 1){
-      disegna_rect(x,y,20,20,"X");
-  }
-  else {
-      disegna_rect(x,y,20,20," ");
-  }
-  text("Disegno quadrettatura", x+25, y+15);
-}
-
 /*
 void crea_Shape(){
   freccia = createShape();
@@ -350,7 +332,6 @@ void disegna_freccia(float posx, float posy, float rotazione){
 */
 
 void carta_millimetrata(int x0, int y0, int aulaX, int aulaY){
-  if ( carta_millimetrata == 1){
   for (int i = 0 ; i < aulaX; i = i + 10){
     stroke(200);
     line(x0 + i, y0, x0 + i, y0 + aulaY);
@@ -359,7 +340,5 @@ void carta_millimetrata(int x0, int y0, int aulaX, int aulaY){
     stroke(200);
     line(x0, y0 + i, x0 + aulaX, y0 + i);
   }
-  }
 stroke(0);
-
 }
