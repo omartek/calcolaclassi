@@ -218,7 +218,7 @@ void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY
   noFill();
   arc(x0 + aulaX/2 + pos_cattedra, y0 + spazio_insY, (dist_professore+12.5)*2, (dist_professore+12.5)*2, 0, 3.14);
 
-  rect(x0 + aulaX, y0 + dist_professore/2-5, 90, 5);                         // disegna porta ingresso
+  rect(x0 + aulaX, y0 + 100-5, 90, 5);                         // disegna porta ingresso
   arc(x0 + aulaX, y0 + 100, 180, 180, 0, 3.14/2);
   
                                                                              // disegno quote
