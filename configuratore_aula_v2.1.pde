@@ -2,7 +2,7 @@ int btnX_pos = 900;        // posizione e dati pulsantiera
 int btnY_pos = 20;
 int btnY_dist = 30;
 int btn_num = 15;          // parametri aula misurabili complessivamente
-int btn_num_ON = 15;        // misure visibili modificabili a video dall'utente
+int btn_num_ON = 2;        // misure visibili modificabili a video dall'utente
 
 int misure_n = btn_num;    // matrici valori e misurazioni
 int[] misure = new int[misure_n];
@@ -37,7 +37,7 @@ void setup() {            // setup valori iniziali
   misure[11] = 200;  // distanza asse testa professore/studente
   misure[12] = 0 ;   // posizione cattedra
   misure[13] = 0 ;   // valore passaggio fila più larga
-  misure[14] = 1 ;   // banchi aggiuntivi
+  misure[14] = 2 ;   // banchi aggiuntivi
   
                              // valore incremento al click della pulsantiera
   incrementi[0] = 5;  // aulaX
@@ -189,7 +189,7 @@ void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY
   fill(180);
   for (int i = 0 ; i < numerofile + 1; i++){                                 // disegno banchi
       for (int ii = 0 ; ii < numerorighe + 1; ii++){
-        rect(xs + bordo_aula_def - (int)(bancoX/2), ys - ii*interasseY - bancoY, bancoX, bancoY);  // bancoX e bancoY
+        //rect(xs + bordo_aula_def - (int)(bancoX/2), ys - ii*interasseY - bancoY, bancoX, bancoY);  // bancoX e bancoY
         ellipse(xs + bordo_aula_def, ys - ii*interasseY , 25, 25);           // disegno testa
        }
   if (pass_agg > 0 && i == (int)numerofile/2){
@@ -202,7 +202,7 @@ void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY
   for (int i = 0; i < misure[14]; i++){ 
   for (int ii = 0; ii < (int)numerofile/2; ii++){
     if (dist(xs + bordo_aula_def + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY, x0 + aulaX/2 + pos_cattedra, y0 + spazio_insY) > 225) {
-          rect(xs + bordo_aula_def - (int)(bancoX/2) + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY  - bancoY, bancoX, bancoY); 
+          //rect(xs + bordo_aula_def - (int)(bancoX/2) + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY  - bancoY, bancoX, bancoY); 
           ellipse(xs + bordo_aula_def + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY, 25, 25);                 // disegno testa
     }
   }
