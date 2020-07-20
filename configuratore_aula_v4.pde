@@ -16,12 +16,11 @@ int interasseX;
 int interasseY;
 int bordo_aula_def;
 
-//PShape freccia;
+PShape steel;
 
 void setup() {            // setup valori iniziali                                       
+  steel = loadShape("steel_2.svg");
   size(1100, 1000);
-//  crea_Shape();         // disegno freccia quote
-
                           // parametri aula misurabili
   misure[0] = 480;   // aulaX
   misure[1] = 600;   // aulaY
@@ -123,7 +122,6 @@ void setup() {            // setup valori iniziali
 } 
 
 void draw() {
-
 background(100);
 int x0 = 20; // origine disegno aula
 int y0 = 50; // origine disegno aula
@@ -142,6 +140,8 @@ int y0 = 50; // origine disegno aula
  calcolo_interassi(misure[0], misure[1], misure[2], misure[3], misure[4], misure[5], misure[6], misure[7], sp_insegnante, misure[13]);                // calcolo interassi
  disegna_banchi(x0, y0, misure[0], misure[1], misure[2], misure[3], misure[6], misure[8], misure[9], misure[10], misure[11], misure[12], misure[13], misure[14], misure[15]); // disegna banchi
 //saveFrame("immagine-####.jpg"); 
+//shape(steel, 600, 100);
+
 }
 
 void mouseReleased()  {                                                    // CLICK DELLA PULSANTIERA VALORI
@@ -198,8 +198,9 @@ void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY
         ellipse(xs + bordo_aula_def, ys - ii*interasseY , 25, 25);           // disegno testa
         }
         else if (modello==1){                                                  // modello node steel
-        ellipse(xs + bordo_aula_def, ys - ii*interasseY , 50, 50);           // disegno sedia
-        rect(xs + bordo_aula_def - 25, ys - ii*interasseY - bancoY, 50, 25);  // bancoX e bancoY
+        shape(steel, xs + bordo_aula_def - 25, ys - ii*interasseY - bancoY);   // bancoX e bancoY
+        //ellipse(xs + bordo_aula_def, ys - ii*interasseY , 50, 50);           // disegno sedia
+        //rect(xs + bordo_aula_def - 25, ys - ii*interasseY - bancoY, 50, 25);  // bancoX e bancoY
         }
         
      }
@@ -219,8 +220,9 @@ void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY
         ellipse(xs + bordo_aula_def + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY, 25, 25);                 // disegno testa
        }
       else if (modello==1){                                                  // modello node steel
-        ellipse(xs + bordo_aula_def  + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY , 50, 50);           // disegno sedia
-        rect(xs + bordo_aula_def - 25 + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY - bancoY, 50, 25);  // bancoX e bancoY
+        shape(steel, xs + bordo_aula_def - 25 + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY - bancoY);
+        //ellipse(xs + bordo_aula_def  + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY , 50, 50);           // disegno sedia
+        //rect(xs + bordo_aula_def - 25 + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY - bancoY, 50, 25);  // bancoX e bancoY
        }  
 
     }
