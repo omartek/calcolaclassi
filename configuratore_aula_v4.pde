@@ -1,8 +1,8 @@
 int btnX_pos = 900;        // posizione e dati pulsantiera
 int btnY_pos = 20;
 int btnY_dist = 30;
-int btn_num = 15;          // parametri aula misurabili complessivamente
-int btn_num_ON = 15;        // misure visibili modificabili a video dall'utente
+int btn_num = 16;          // parametri aula misurabili complessivamente
+int btn_num_ON = 16;        // misure visibili modificabili a video dall'utente
 
 int misure_n = btn_num;    // matrici valori e misurazioni
 int[] misure = new int[misure_n];
@@ -38,7 +38,7 @@ void setup() {            // setup valori iniziali
   misure[12] = 0 ;   // posizione cattedra
   misure[13] = 0 ;   // valore passaggio fila più larga
   misure[14] = 1 ;   // banchi aggiuntivi
-  
+  misure[15] = 0 ;   // banchi aggiuntivi 
                              // valore incremento al click della pulsantiera
   incrementi[0] = 5;  // aulaX
   incrementi[1] = 5;  // aulaY
@@ -55,6 +55,7 @@ void setup() {            // setup valori iniziali
   incrementi[12] = 5; // posizione cattedra
   incrementi[13] = 5; // passaggio più largo
   incrementi[14] = 1; // banchi aggiuntivi
+  incrementi[15] = 1; // banchi aggiuntivi
 
                            // valori min e max per le misure
   min_max_valori[0][0] = 200;     // aulaX
@@ -99,6 +100,9 @@ void setup() {            // setup valori iniziali
   min_max_valori[14][0]= 0; // riga aggiuntiva
   min_max_valori[14][1]= 2; // riga aggiuntiva 
 
+  min_max_valori[15][0]= 0; // banco rettangolare
+  min_max_valori[15][1]= 1; // banco node steel 
+  
                            // label pulsanti e valori
   btn_label[0] = "AulaX";
   btn_label[1] = "AulaY";
@@ -115,7 +119,7 @@ void setup() {            // setup valori iniziali
   btn_label[12] = "pos cattedra";
   btn_label[13] = "fila +larga";
   btn_label[14] = "banchi agg";
-
+  btn_label[15] = "model banco";
 } 
 
 void draw() {
@@ -136,7 +140,7 @@ int y0 = 50; // origine disegno aula
  
  int sp_insegnante = misure[8] + misure[11];
  calcolo_interassi(misure[0], misure[1], misure[2], misure[3], misure[4], misure[5], misure[6], misure[7], sp_insegnante, misure[13]);                // calcolo interassi
- disegna_banchi(x0, y0, misure[0], misure[1], misure[2], misure[3], misure[6], misure[8], misure[9], misure[10], misure[11], misure[12], misure[13]); // disegna banchi
+ disegna_banchi(x0, y0, misure[0], misure[1], misure[2], misure[3], misure[6], misure[8], misure[9], misure[10], misure[11], misure[12], misure[13], misure[14], misure[15]); // disegna banchi
 //saveFrame("immagine-####.jpg"); 
 }
 
@@ -179,7 +183,7 @@ int verifica_btn(int x, int y){                                            // ca
 return -1;
 }
                                                                             // DISEGNO AULA E QUOTE
-void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY, int fondo_aula, int spazio_insY, int cattedraX, int cattedraY, int dist_professore, int pos_cattedra, int pass_agg){
+void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY, int fondo_aula, int spazio_insY, int cattedraX, int cattedraY, int dist_professore, int pos_cattedra, int pass_agg, int banchi_agg, int modello){
   int xs = x0;
   int ys = y0 + aulaY - fondo_aula;
   int dist_professore_reale = aulaY - fondo_aula - spazio_insY - numerorighe*interasseY ;
@@ -189,9 +193,16 @@ void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY
   fill(180);
   for (int i = 0 ; i < numerofile + 1; i++){                                 // disegno banchi
       for (int ii = 0 ; ii < numerorighe + 1; ii++){
+        if (modello==0){                                                       // modello classico
         rect(xs + bordo_aula_def - (int)(bancoX/2), ys - ii*interasseY - bancoY, bancoX, bancoY);  // bancoX e bancoY
         ellipse(xs + bordo_aula_def, ys - ii*interasseY , 25, 25);           // disegno testa
-       }
+        }
+        else if (modello==1){                                                  // modello node steel
+        ellipse(xs + bordo_aula_def, ys - ii*interasseY , 50, 50);           // disegno sedia
+        rect(xs + bordo_aula_def - 25, ys - ii*interasseY - bancoY, 50, 25);  // bancoX e bancoY
+        }
+        
+     }
   if (pass_agg > 0 && i == (int)numerofile/2){
       xs = xs + interasseX + pass_agg;
       }
@@ -199,14 +210,22 @@ void disegna_banchi(int x0, int y0, int aulaX, int aulaY, int bancoX, int bancoY
   }
   
   xs = x0;                                                                   // banchi a fianco della cattedra
-  for (int i = 0; i < misure[14]; i++){ 
+  for (int i = 0; i < banchi_agg; i++){ 
   for (int ii = 0; ii < (int)numerofile/2; ii++){
+
     if (dist(xs + bordo_aula_def + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY, x0 + aulaX/2 + pos_cattedra, y0 + spazio_insY) > 225) {
-          rect(xs + bordo_aula_def - (int)(bancoX/2) + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY  - bancoY, bancoX, bancoY); 
-          ellipse(xs + bordo_aula_def + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY, 25, 25);                 // disegno testa
+      if (modello==0){
+        rect(xs + bordo_aula_def - (int)(bancoX/2) + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY  - bancoY, bancoX, bancoY); 
+        ellipse(xs + bordo_aula_def + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY, 25, 25);                 // disegno testa
+       }
+      else if (modello==1){                                                  // modello node steel
+        ellipse(xs + bordo_aula_def  + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY , 50, 50);           // disegno sedia
+        rect(xs + bordo_aula_def - 25 + ii*interasseX, ys - (numerorighe + 1 + i)*interasseY - bancoY, 50, 25);  // bancoX e bancoY
+       }  
+
     }
   }
- }
+  }
   
   rect(x0 + aulaX/2 - cattedraX/2 + pos_cattedra, y0 + spazio_insY, cattedraX, cattedraY);  // disegno cattedra
   line(x0 + aulaX/2 + pos_cattedra, y0 + spazio_insY, x0 + aulaX/2 + pos_cattedra, y0 + spazio_insY+(dist_professore+12.5));
